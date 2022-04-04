@@ -1,0 +1,13 @@
+[package]
+name = "actix-web-example"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+actix-web = "4.0.1"
+chrono = { version = "0.4.10", features = ["serde"] }
+diesel = { version = "1.4.2", features = ["postgres", "uuidv07", "r2d2", "chrono"] }
+dotenv = "0.15.0"
+r2d2 = "0.8.8"
+serde = { version = "1.0.136", features = ["derive"] }
+bcrypt = "0.12.0"
