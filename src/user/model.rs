@@ -13,6 +13,7 @@ pub struct User {
     pub id: i32,
     pub email: String,
     pub username: String,
+    #[serde(skip_serializing)]
     pub password: String,
     pub created_at: chrono::NaiveDateTime,
     pub updated_at: chrono::NaiveDateTime,
