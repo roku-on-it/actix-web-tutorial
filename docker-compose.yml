@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  postgres:
+    container_name: 'postgres'
+    image: postgres:13-alpine
+    logging:
+      driver: none
+    environment:
+      POSTGRES_PASSWORD: actix
+      POSTGRES_USER: actix
+      POSTGRES_DB: actix
+    ports:
+      - "5432:5432"
