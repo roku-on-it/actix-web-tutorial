@@ -38,6 +38,7 @@ async fn main() -> std::io::Result<()> {
       .wrap(middleware::Compress::default())
       .configure(auth::controller::config_routes)
       .configure(user::controller::config_routes)
+      .configure(post::controller::config_routes)
   })
     .bind(("127.0.0.1", 4000))?
     .run()
