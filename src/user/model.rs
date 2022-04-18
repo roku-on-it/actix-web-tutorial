@@ -1,14 +1,12 @@
 use bcrypt::DEFAULT_COST;
-use diesel::{ExpressionMethods, insert_into};
-use diesel::QueryDsl;
-use diesel::RunQueryDsl;
+use diesel::{ExpressionMethods, insert_into, QueryDsl, RunQueryDsl};
 use serde::{Deserialize, Serialize};
 
 use crate::Pool;
-use crate::schema::users as UsersTable;
+use crate::schema::users;
 use crate::schema::users::dsl::*;
 
-#[derive(Debug, Serialize, Deserialize, Queryable)]
+#[derive(Identifiable, Associations, Queryable, Debug, Serialize, Deserialize)]
 pub struct User {
   pub id: i32,
   pub email: String,
@@ -21,7 +19,7 @@ pub struct User {
 }
 
 #[derive(Insertable, Debug, Serialize, Deserialize)]
-#[table_name = "UsersTable"]
+#[table_name = "users"]
 pub struct CreateUser {
   pub email: String,
   pub username: String,
