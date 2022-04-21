@@ -1,16 +1,24 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
-pub struct NotFoundException {
-  pub message: &'static str,
-  pub status_code: u16,
-}
-
-impl Default for NotFoundException {
-  fn default() -> Self {
-    NotFoundException {
-      message: "Not Found",
-      status_code: 404,
-    }
-  }
+pub enum Exception {
+  BadRequest,
+  Unauthorized,
+  NotFound,
+  Forbidden,
+  NotAcceptable,
+  RequestTimeout,
+  Conflict,
+  Gone,
+  HttpVersionNotSupported,
+  PayloadTooLarge,
+  UnsupportedMediaType,
+  UnprocessableEntity,
+  InternalServerError,
+  NotImplemented,
+  ImATeapot,
+  MethodNotAllowed,
+  BadGateway,
+  ServiceUnavailable,
+  GatewayTimeout,
+  PreconditionFailed,
 }
