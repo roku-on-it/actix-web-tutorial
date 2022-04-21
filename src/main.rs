@@ -1,16 +1,15 @@
 #[macro_use]
 extern crate diesel;
 
-use actix_web::{App, HttpServer, middleware};
-use actix_web::web::Data;
+use actix_web::{middleware, web::Data, App, HttpServer};
 use diesel::prelude::*;
 use diesel::r2d2::{self, ConnectionManager};
 
 mod auth;
 mod core;
+mod post;
 mod schema;
 mod user;
-mod post;
 
 pub type Pool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
@@ -40,7 +39,7 @@ async fn main() -> std::io::Result<()> {
       .configure(user::controller::config_routes)
       .configure(post::controller::config_routes)
   })
-    .bind(("127.0.0.1", 4000))?
-    .run()
-    .await
+  .bind(("127.0.0.1", 4000))?
+  .run()
+  .await
 }

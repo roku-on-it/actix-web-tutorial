@@ -1,5 +1,4 @@
-use actix_web::post;
-use actix_web::{web, HttpResponse, Responder};
+use actix_web::{post, web, HttpResponse, Responder};
 use diesel::NotFound;
 
 use crate::auth::model::LoginInput;

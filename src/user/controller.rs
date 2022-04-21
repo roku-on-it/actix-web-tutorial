@@ -1,8 +1,7 @@
-use actix_web::{get, post, web};
-use actix_web::{HttpResponse, Responder};
+use actix_web::{get, post, web, HttpResponse, Responder};
 
-use crate::AppState;
 use crate::user::model::{CreateUser, User};
+use crate::AppState;
 
 pub fn config_routes(cfg: &mut web::ServiceConfig) {
   cfg.service(web::scope("/users").service(get_users).service(create_user));
