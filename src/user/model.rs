@@ -1,10 +1,10 @@
 use bcrypt::DEFAULT_COST;
-use diesel::{ExpressionMethods, insert_into, QueryDsl, RunQueryDsl};
+use diesel::{insert_into, ExpressionMethods, QueryDsl, RunQueryDsl};
 use serde::{Deserialize, Serialize};
 
-use crate::Pool;
 use crate::schema::users;
 use crate::schema::users::dsl::*;
+use crate::Pool;
 
 #[derive(Identifiable, Associations, Queryable, Debug, Serialize, Deserialize)]
 pub struct User {
@@ -27,9 +27,9 @@ pub struct CreateUser {
 }
 
 impl User {
-  pub fn find_one_by_email(query: String, pool: &Pool) -> Result<User, diesel::result::Error> {
+  pub fn find_one_by_email(email: String, pool: &Pool) -> Result<User, diesel::result::Error> {
     let conn = pool.get().unwrap();
-    let user = users.filter(email.eq(&query)).first(&conn);
+    let user = users.filter(email.eq(&email)).first(&conn);
 
     user
   }
@@ -47,8 +47,7 @@ impl User {
   ) -> Result<User, diesel::result::Error> {
     let conn = pool.get().unwrap();
 
-    create_user_input.password =
-      bcrypt::hash(create_user_input.password, DEFAULT_COST).unwrap();
+    create_user_input.password = bcrypt::hash(create_user_input.password, DEFAULT_COST).unwrap();
 
     let user = CreateUser {
       ..create_user_input
