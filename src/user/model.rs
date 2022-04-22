@@ -1,7 +1,9 @@
 use bcrypt::DEFAULT_COST;
+use diesel::result::Error;
 use diesel::{insert_into, ExpressionMethods, QueryDsl, RunQueryDsl};
 use serde::{Deserialize, Serialize};
 
+use crate::core::exception::Exception;
 use crate::schema::users;
 use crate::schema::users::dsl::*;
 use crate::Pool;
@@ -27,6 +29,19 @@ pub struct CreateUser {
 }
 
 impl User {
+  pub fn find_one(user_id: i32, pool: &Pool) -> Result<User, Exception> {
+    let conn = pool.get().unwrap();
+    let user = users.find(user_id).first(&conn);
+
+    match user {
+      Ok(user) => Ok(user),
+      Err(why) => match why {
+        Error::NotFound => Err(Exception::NotFound),
+        _ => Err(Exception::InternalServerError),
+      },
+    }
+  }
+
   pub fn find_one_by_email(query: String, pool: &Pool) -> Result<User, diesel::result::Error> {
     let conn = pool.get().unwrap();
     let user = users.filter(email.eq(&query)).first(&conn);
