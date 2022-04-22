@@ -27,9 +27,9 @@ pub struct CreateUser {
 }
 
 impl User {
-  pub fn find_one_by_email(email: String, pool: &Pool) -> Result<User, diesel::result::Error> {
+  pub fn find_one_by_email(query: String, pool: &Pool) -> Result<User, diesel::result::Error> {
     let conn = pool.get().unwrap();
-    let user = users.filter(email.eq(&email)).first(&conn);
+    let user = users.filter(email.eq(&query)).first(&conn);
 
     user
   }
